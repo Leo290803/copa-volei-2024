@@ -133,11 +133,18 @@ function renderizarBotoesData(uniqueDates) {
     }
 }
 
-function renderizarTabelasClassificacao(classificacaoDados) {
+// ATUALIZE ESTA FUNÇÃO NO SEU script.js
+function renderizarTabelasClassificacao(classificacaoDados, naipeFiltro = 'Todos') {
     const container = document.getElementById('classificacao-grupos');
     container.innerHTML = ''; 
 
-    const gruposPorNaipe = classificacaoDados.reduce((acc, time) => {
+    // 1. FILTRAGEM POR NAIPE
+    let dadosFiltrados = classificacaoDados;
+    if (naipeFiltro !== 'Todos') {
+        dadosFiltrados = classificacaoDados.filter(time => time.naipe === naipeFiltro);
+    }
+
+    const gruposPorNaipe = dadosFiltrados.reduce((acc, time) => {
         const chave = `${time.naipe}_${time.grupo}`;
         if (!acc[chave]) {
             acc[chave] = { naipe: time.naipe, grupo: time.grupo, times: [] };
@@ -147,6 +154,12 @@ function renderizarTabelasClassificacao(classificacaoDados) {
     }, {});
 
     const chavesOrdenadas = Object.keys(gruposPorNaipe).sort(); 
+
+    if (chavesOrdenadas.length === 0 && naipeFiltro !== 'Todos') {
+         container.innerHTML = `<p style="text-align:center; padding: 30px;">Não há grupos para a modalidade ${naipeFiltro === 'F' ? 'Feminina' : 'Masculina'} com jogos jogados ou grupos definidos.</p>`;
+         return;
+    }
+
 
     chavesOrdenadas.forEach(chave => {
         const { naipe, grupo, times } = gruposPorNaipe[chave];
@@ -173,7 +186,8 @@ function renderizarTabelasClassificacao(classificacaoDados) {
                             <th>V</th>
                             <th>D</th>
                             <th>SS</th>
-                            <th>SP</th> </tr>
+                            <th>SP</th>
+                        </tr>
                     </thead>
                     <tbody>
         `;
@@ -188,7 +202,8 @@ function renderizarTabelasClassificacao(classificacaoDados) {
                     <td>${time.V}</td>
                     <td>${time.D}</td>
                     <td>${time.SS > 0 ? '+' : ''}${time.SS}</td>
-                    <td>${time.SP > 0 ? '+' : ''}${time.SP}</td> </tr>
+                    <td>${time.SP > 0 ? '+' : ''}${time.SP}</td>
+                </tr>
             `;
         });
 
@@ -303,6 +318,7 @@ function filtrarResultados(dataSelecionada, todosOsJogos) {
 // FUNÇÕES DE INICIALIZAÇÃO
 // ==========================================================
 
+// ATUALIZE ESTA FUNÇÃO NO SEU script.js
 async function carregarDados() {
     try {
         const response = await fetch('dados.json');
@@ -315,7 +331,30 @@ async function carregarDados() {
         
         const classificacaoCalculada = calcularEstatisticas();
         
+        // 1. Renderiza a classificação inicial (TODOS)
         renderizarTabelasClassificacao(classificacaoCalculada);
+        
+        // 2. Configura os botões de filtro de Naipe
+        const naipeButtons = document.querySelectorAll('.naipe-button');
+        naipeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove a classe 'active' de todos
+                naipeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Adiciona 'active' no botão clicado
+                this.classList.add('active');
+                
+                const naipeSelecionado = this.dataset.naipe;
+                
+                // Filtra e renderiza a tabela de classificação
+                renderizarTabelasClassificacao(classificacaoCalculada, naipeSelecionado);
+                
+                // Filtra a programação e resultados (opcional, mas recomendado)
+                // Se quiser filtrar os resultados também:
+                // renderizarResultadosFiltradosPorNaipe(naipeSelecionado); 
+            });
+        });
+
         
         const uniqueDates = getUniqueDates(DADOS_CAMPEONATO.jogos);
         renderizarBotoesData(uniqueDates); 
