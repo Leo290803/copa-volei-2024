@@ -1,0 +1,86 @@
+{
+    "times": [
+        { "time": "SÃO RAIMUNDO", "grupo": "A", "naipe": "F" },
+        { "time": "VÔLEI TRÊS CORAÇÕES / AMAJARI", "grupo": "A", "naipe": "F" },
+        { "time": "TAURUS", "grupo": "A", "naipe": "F" },
+        { "time": "CTA", "grupo": "B", "naipe": "F" },
+        { "time": "LOBO D’ALMADA (F)", "grupo": "B", "naipe": "F" },
+        { "time": "MACUXI SPORT", "grupo": "B", "naipe": "F" },
+        { "time": "IATE CLUBE", "grupo": "C", "naipe": "F" },
+        { "time": "VÔLEI SANTA LUZIA / AMAJARI (F)", "grupo": "C", "naipe": "F" },
+        { "time": "PSG", "grupo": "C", "naipe": "F" },
+        
+        { "time": "AZUL MANIA", "grupo": "A", "naipe": "M" },
+        { "time": "VÔLEI IRANDUBA – AM", "grupo": "A", "naipe": "M" },
+        { "time": "ARENA", "grupo": "A", "naipe": "M" },
+        { "time": "INDEPENDENTE RORAIMA (SUB-17)", "grupo": "A", "naipe": "M" },
+        { "time": "POLÔNIA TEAM", "grupo": "B", "naipe": "M" },
+        { "time": "VÔLEI SANTA LUZIA / AMAJARI (M)", "grupo": "B", "naipe": "M" },
+        { "time": "INDEPENDENTE RORAIMA (SUB - 16)", "grupo": "B", "naipe": "M" },
+        { "time": "INDEPENDENTE RORAIMA (SUB - ADULTO)", "grupo": "B", "naipe": "M" },
+        { "time": "LOBO D’ALMADA (M)", "grupo": "C", "naipe": "M" },
+        { "time": "IFRR CLUBE", "grupo": "C", "naipe": "M" },
+        { "time": "EVEREST VÔLEI", "grupo": "C", "naipe": "M" },
+        { "time": "ARD SUB - 20", "grupo": "D", "naipe": "M" },
+        { "time": "INDEPENDENTE RORAIMA (SUB - 19)", "grupo": "D", "naipe": "M" },
+        { "time": "VÔLEI NORMANDIA", "grupo": "D", "naipe": "M" }
+    ],
+    
+    "jogos": [
+
+        { "data": "2024-12-15", "hora": "15:00", "fase": "Fase de Grupos (Masc B)", "timeA": "INDEPENDENTE RORAIMA (SUB - 16)", "timeB": "POLÔNIA TEAM", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "15:00", "fase": "Fase de Grupos (Fem B)", "timeA": "MACUXI SPORT", "timeB": "CTA", "sets": [3, 2], "parciais": [[22, 25], [25, 20], [25, 27], [25, 18], [15, 13]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "16:00", "fase": "Fase de Grupos (Masc A)", "timeA": "AZUL MANIA", "timeB": "INDEPENDENTE RORAIMA (SUB-17)", "sets": [3, 1], "parciais": [[25, 18], [20, 25], [25, 16], [25, 22]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "16:00", "fase": "Fase de Grupos (Fem A)", "timeA": "TAURUS", "timeB": "SÃO RAIMUNDO", "sets": [0, 3], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "17:00", "fase": "Fase de Grupos (Masc C)", "timeA": "LOBO D’ALMADA (M)", "timeB": "IFRR CLUBE", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "17:00", "fase": "Fase de Grupos (Masc D)", "timeA": "ARD SUB - 20", "timeB": "INDEPENDENTE RORAIMA (SUB - 19)", "sets": [0, 3], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "18:00", "fase": "Fase de Grupos (Masc B)", "timeA": "INDEPENDENTE RORAIMA (SUB - 16)", "timeB": "INDEPENDENTE RORAIMA (SUB - ADULTO)", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+
+
+        { "data": "2024-12-16", "hora": "20:00", "fase": "Fase de Grupos (Masc A)", "timeA": "ARENA", "timeB": "AZUL MANIA", "sets": [3, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-16", "hora": "20:00", "fase": "Fase de Grupos (Masc C)", "timeA": "EVEREST VÔLEI", "timeB": "LOBO D’ALMADA (M)", "sets": [0, 3], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        
+
+        { "data": "2024-12-17", "hora": "18:30", "fase": "Fase de Grupos (Fem B)", "timeA": "LOBO D’ALMADA (F)", "timeB": "MACUXI SPORT", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-17", "hora": "18:30", "fase": "Fase de Grupos (Masc B)", "timeA": "VÔLEI SANTA LUZIA / AMAJARI (M)", "timeB": "INDEPENDENTE RORAIMA (SUB - 16)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-17", "hora": "19:30", "fase": "Fase de Grupos (Fem A)", "timeA": "VÔLEI TRÊS CORAÇÕES / AMAJARI", "timeB": "TAURUS", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-17", "hora": "19:30", "fase": "Fase de Grupos (Masc C)", "timeA": "IFRR CLUBE", "timeB": "EVEREST VÔLEI", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-17", "hora": "20:30", "fase": "Fase de Grupos (Fem C)", "timeA": "IATE CLUBE", "timeB": "VÔLEI SANTA LUZIA / AMAJARI (F)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-17", "hora": "20:30", "fase": "Fase de Grupos (Masc B)", "timeA": "POLÔNIA TEAM", "timeB": "VÔLEI SANTA LUZIA / AMAJARI (M)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        
+
+        { "data": "2024-12-18", "hora": "18:30", "fase": "Fase de Grupos (Masc B)", "timeA": "INDEPENDENTE RORAIMA (SUB - ADULTO)", "timeB": "VÔLEI SANTA LUZIA / AMAJARI (M)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "19:00", "fase": "Fase de Grupos (Fem C)", "timeA": "VÔLEI SANTA LUZIA / AMAJARI (F)", "timeB": "PSG", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "19:00", "fase": "Fase de Grupos (Fem B)", "timeA": "CTA", "timeB": "LOBO D’ALMADA (F)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "19:30", "fase": "Fase de Grupos (Masc D)", "timeA": "INDEPENDENTE RORAIMA (SUB - 19)", "timeB": "VÔLEI NORMANDIA", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "19:50", "fase": "Fase de Grupos (Fem A)", "timeA": "SÃO RAIMUNDO", "timeB": "VÔLEI TRÊS CORAÇÕES / AMAJARI", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "19:50", "fase": "Fase de Grupos (Masc A)", "timeA": "ARENA", "timeB": "INDEPENDENTE RORAIMA (SUB-17)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "20:30", "fase": "Fase de Grupos (Masc B)", "timeA": "POLÔNIA TEAM", "timeB": "INDEPENDENTE RORAIMA (SUB - ADULTO)", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-18", "hora": "20:40", "fase": "Fase de Grupos (Fem C)", "timeA": "IATE CLUBE", "timeB": "PSG", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        
+
+        { "data": "2024-12-19", "hora": "10:00", "fase": "Fase de Grupos (Masc D)", "timeA": "VÔLEI NORMANDIA", "timeB": "ARD SUB - 20", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "11:00", "fase": "Fase de Grupos (Masc A)", "timeA": "INDEPENDENTE RORAIMA (SUB-17)", "timeB": "VÔLEI IRANDUBA – AM", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "18:30", "fase": "Fase de Grupos (Masc A)", "timeA": "AZUL MANIA", "timeB": "VÔLEI IRANDUBA – AM", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "18:30", "fase": "Quartas de Final (Masc)", "timeA": "1ºD", "timeB": "2ºA", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "18:30", "fase": "Quartas de Final (Fem)", "timeA": "1ºA", "timeB": "2º MELHOR 3º", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "19:30", "fase": "Quartas de Final (Masc)", "timeA": "1ºB", "timeB": "2ºC", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "19:30", "fase": "Quartas de Final (Fem)", "timeA": "1ºB", "timeB": "2ºC", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "20:30", "fase": "Quartas de Final (Fem)", "timeA": "1ºC", "timeB": "2ºB", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-19", "hora": "20:30", "fase": "Fase de Grupos (Masc A)", "timeA": "VÔLEI IRANDUBA – AM", "timeB": "ARENA", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+
+
+        { "data": "2024-12-20", "hora": "18:00", "fase": "Quartas de Final (Masc)", "timeA": "1ºA", "timeB": "2ºD", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 2" },
+        { "data": "2024-12-20", "hora": "18:00", "fase": "Quartas de Final (Masc)", "timeA": "1ºD", "timeB": "2ºA", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" },
+        { "data": "2024-12-20", "hora": "19:00", "fase": "Semifinal (Fem)", "timeA": "VENCEDOR DO JOGO 10", "timeB": "VENCEDOR DO JOGO 13", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 2" },
+        { "data": "2024-12-20", "hora": "19:00", "fase": "Semifinal (Fem)", "timeA": "VENCEDOR DO JOGO 11", "timeB": "VENCEDOR DO JOGO 12", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" },
+        { "data": "2024-12-20", "hora": "20:00", "fase": "Semifinal (Masc)", "timeA": "VENCEDOR DO JOGO 18", "timeB": "VENCEDOR DO JOGO 20", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 2" },
+        { "data": "2024-12-20", "hora": "20:00", "fase": "Semifinal (Masc)", "timeA": "VENCEDOR DO JOGO 21", "timeB": "VENCEDOR DO JOGO 23", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" },
+
+
+        { "data": "2024-12-21", "hora": "09:00", "fase": "Disputa 3º Lugar (Masc)", "timeA": "PERDEDOR DO JOGO 22", "timeB": "PERDEDOR DO JOGO 23", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" },
+        { "data": "2024-12-21", "hora": "10:00", "fase": "Disputa 3º Lugar (Fem)", "timeA": "PERDEDOR DO JOGO 14", "timeB": "PERDEDOR DO JOGO 15", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" },
+        { "data": "2024-12-21", "hora": "15:30", "fase": "Final (Fem)", "timeA": "VENCEDOR DO JOGO 14", "timeB": "VENCEDOR DO JOGO 15", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" },
+        { "data": "2024-12-21", "hora": "17:30", "fase": "Final (Masc)", "timeA": "VENCEDOR DO JOGO 22", "timeB": "VENCEDOR DO JOGO 23", "sets": [0, 0], "parciais": [], "local": "Escola do SESI/RR - Quadra 1" }
+    ]
+}
