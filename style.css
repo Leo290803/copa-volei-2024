@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f7f9;
@@ -8,11 +8,33 @@ body {
 
 header {
     background-color: #007bff;
-    background-image: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* Gradiente sutil */
+    background-image: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
     color: white;
     padding: 30px 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.logo {
+    max-width: 90px;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 header h1 {
@@ -35,9 +57,9 @@ main {
 section {
     background-color: white;
     padding: 20px;
-    margin-bottom: 30px; /* Mais espaçamento */
-    border-radius: 10px; /* Bordas mais suaves */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -86,7 +108,7 @@ h4 {
 }
 
 .tabela-grupo th, .tabela-grupo td {
-    border: 1px solid #e9ecef; /* Borda da célula mais clara */
+    border: 1px solid #e9ecef;
     padding: 10px 8px;
     text-align: center;
 }
@@ -97,20 +119,19 @@ h4 {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.85em;
-    position: sticky; /* Fixa o cabeçalho se a tabela tiver scroll */
+    position: sticky;
     top: 0;
 }
 
-/* Efeito Zebra para melhor legibilidade */
 .tabela-grupo tbody tr:nth-child(even) {
     background-color: #f8f9fa;
 }
 
 .tabela-grupo tbody tr:hover {
-    background-color: #e9f0f8; /* Destaque na linha ao passar o mouse */
+    background-color: #e9f0f8;
 }
 
-.tabela-grupo td:nth-child(1) { /* Coluna Posição */
+.tabela-grupo td:nth-child(1) {
     font-weight: bold;
     color: #0056b3;
     background-color: #f1f6ff;
@@ -133,7 +154,7 @@ h4 {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f0f5fa; /* Fundo mais suave */
+    background-color: #f0f5fa;
 }
 
 #filtro-data p {
@@ -154,9 +175,9 @@ h4 {
     color: #007bff;
     border: 2px solid #007bff;
     padding: 8px 15px;
-    border-radius: 20px; /* Bordas arredondadas (pílula) */
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s ease; /* Transição suave */
+    transition: all 0.3s ease;
     font-weight: 600;
     font-size: 0.9em;
     appearance: none; 
@@ -182,7 +203,7 @@ h4 {
     padding: 12px 15px;
     border-radius: 6px;
     margin-top: 30px !important; 
-    border-left: 6px solid #007bff; /* Borda mais grossa */
+    border-left: 6px solid #007bff;
     color: #0056b3 !important;
     font-size: 1.3em !important;
     font-weight: 700;
@@ -211,11 +232,11 @@ h4 {
     border-radius: 6px;
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease; /* Efeito de transição */
+    transition: transform 0.2s ease;
 }
 
 .jogo:hover {
-    transform: translateY(-2px); /* Eleva um pouco ao passar o mouse */
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -263,80 +284,59 @@ h4 {
 /* --- RESPONSIVIDADE (Telas Menores que 768px) --- */
 @media (max-width: 768px) {
     
+    header {
+        padding: 20px 10px;
+    }
+    
     header h1 {
-        font-size: 1.8em;
+        font-size: 1.6em; /* Título menor */
     }
 
-    /* As tabelas ficam com scroll lateral */
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .logo {
+        max-width: 60px;
+    }
+
+    /* OTIMIZAÇÃO DA TABELA (CLASSIFICAÇÃO) */
     .tabela-grupo {
         min-width: 100%;
-        overflow-x: auto; 
+        overflow-x: auto; /* Mantém o scroll horizontal para a tabela, se necessário */
     }
     
     .tabela-grupo table {
-        min-width: 600px; /* Garante largura mínima para visualização */
+        min-width: 580px; /* Garante que a tabela tenha espaço suficiente para o conteúdo */
+        font-size: 0.8em; /* Reduz a fonte para caber mais informação */
+    }
+    
+    .tabela-grupo th, .tabela-grupo td {
+        padding: 6px 4px; /* Reduz o padding para mais compactação */
     }
 
-    /* Ajuste na disposição dos botões de data */
+    /* OTIMIZAÇÃO DO FILTRO DE DATA */
     #filtro-data {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
+        gap: 10px;
+        padding: 10px;
     }
-
-    /* O bloco de jogos fica mais compacto */
+    
+    /* OTIMIZAÇÃO DOS JOGOS (FLEXIBILIDADE) */
     .jogo {
-        padding: 12px;
-        font-size: 1em;
+        padding: 10px;
+        font-size: 0.95em;
+    }
+    
+    .jogo-info small {
+        font-size: 0.8em; /* Parciais ficam menores */
     }
     
     .placar-box {
         font-size: 1.2em;
         min-width: 70px;
-    }
-}
-
-
-/* --- Footer --- */
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #343a40;
-    color: #f8f9fa;
-    margin-top: 30px;
-    font-size: 0.9em;
-}
-
-/* --- ESTILO PARA LOGO NO CABEÇALHO --- */
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza o bloco todo */
-    gap: 20px;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 10px 0; /* Espaçamento interno */
-}
-
-.logo {
-    max-width: 90px; /* Tamanho da logo em telas grandes */
-    height: auto;
-    border-radius: 50%; /* Deixa a logo redonda (opcional) */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05); /* Pequeno zoom ao passar o mouse */
-}
-
-/* Ajuste do cabeçalho para telas menores */
-@media (max-width: 600px) {
-    .header-content {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .logo {
-        max-width: 70px; /* Logo menor no celular */
+        padding-left: 10px;
     }
 }
