@@ -409,3 +409,100 @@ h4 {
     padding-top: 4px;
     border-top: 1px dashed #f0f0f0;
 }
+
+/* ==========================================================
+   ADIÇÕES FINAIS: TELA DE INÍCIO (SPLASH SCREEN)
+   ========================================================== */
+#splash-screen {
+    /* Ocupa a tela inteira */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Centraliza o conteúdo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    background-color: #f4f7f9; /* Mesma cor de fundo do body */
+    z-index: 9999; /* Garante que fique acima de tudo */
+    
+    /* Estilos Visuais */
+    color: #0056b3;
+    animation: fadeIn 0.8s ease-out; /* Efeito suave de entrada */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#splash-screen h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #007bff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#splash-screen p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #6c757d;
+}
+
+#start-button {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: 700;
+    background-color: #28a745; /* Verde de destaque */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#start-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(40, 167, 69, 0.5);
+}
+
+/* ==========================================================
+   RODAPÉ (FOOTER)
+   ========================================================== */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+/* Garante que o conteúdo principal não fique grudado no rodapé */
+#main-content {
+    min-height: calc(100vh - 100px); /* Ajuste de altura mínima */
+    padding-bottom: 50px; 
+}
+
+/* Estilo específico para a logo na Tela de Início */
+.logo-splash {
+    max-width: 150px; /* Define um tamanho maior para destaque */
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 30px; /* Espaçamento abaixo da logo */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
+    border: 5px solid white; /* Borda branca */
+}
+
+/* Opcional: Se a logo do header for a mesma, você pode usar a mesma URL,
+   mas é bom ter classes separadas para controle de tamanho. */

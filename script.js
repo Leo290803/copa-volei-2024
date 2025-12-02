@@ -384,6 +384,7 @@ function filtrarResultados(dataSelecionada, todosOsJogos, naipeFiltro = 'Todos')
 // FUNÇÕES DE INICIALIZAÇÃO
 // ==========================================================
 
+// Esta função agora APENAS carrega e processa os dados, RETORNANDO-OS.
 async function carregarDados() {
     try {
         const response = await fetch('dados.json');
@@ -394,57 +395,44 @@ async function carregarDados() {
         
         DADOS_CAMPEONATO = await response.json();
         
-        // NOVO CÓDIGO: MAPEAR E INFERIR O NAIPE DOS JOGOS
+        // CORREÇÃO DE INFERÊNCIA DE NAIPE (Para corrigir o filtro)
         const teamNaipeMap = {};
         DADOS_CAMPEONATO.times.forEach(time => {
             teamNaipeMap[time.time] = time.naipe;
         });
 
         DADOS_CAMPEONATO.jogos.forEach(jogo => {
-            // Se o naipe não estiver explicitamente no JSON do jogo, tenta inferir.
             if (!jogo.naipe) {
                 const naipeInferido = teamNaipeMap[jogo.timeA];
-                
-                // Se o time A for um time real (não um placeholder)
                 if (naipeInferido) {
-                    // Adiciona a propriedade 'naipe' ao objeto do jogo.
                     jogo.naipe = naipeInferido;
                 } 
             }
         });
-        // FIM DO NOVO CÓDIGO DE INFERÊNCIA
         
         const classificacaoCalculada = calcularEstatisticas();
+        const uniqueDates = getUniqueDates(DADOS_CAMPEONATO.jogos);
         
-        // 1. Renderiza a classificação inicial (TODOS)
-        renderizarTabelasClassificacao(classificacaoCalculada);
-        
-        // 2. Configura os botões de filtro de Naipe
+        // Configura o evento de clique dos botões de Naipe (o evento precisa existir antes da renderização)
         const naipeButtons = document.querySelectorAll('.naipe-button');
         naipeButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Remove a classe 'active' de todos
                 naipeButtons.forEach(btn => btn.classList.remove('active'));
-                
-                // Adiciona 'active' no botão clicado
                 this.classList.add('active');
                 
                 const naipeSelecionado = this.dataset.naipe;
                 
-                // Filtra e renderiza a tabela de classificação
                 renderizarTabelasClassificacao(classificacaoCalculada, naipeSelecionado);
                 
-                // Re-executa o filtro de resultados com a data ativa e o novo naipe
                 const dataAtiva = document.querySelector('.date-button.active')?.dataset.date;
                 if (dataAtiva) {
                     filtrarResultados(dataAtiva, DADOS_CAMPEONATO.jogos, naipeSelecionado); 
                 }
             });
         });
-
         
-        const uniqueDates = getUniqueDates(DADOS_CAMPEONATO.jogos);
-        renderizarBotoesData(uniqueDates); 
+        // Retorna os dados processados para a função de controle
+        return { classificacaoCalculada, uniqueDates };
 
     } catch (error) {
         console.error("Falha ao carregar ou processar o JSON:", error);
@@ -452,7 +440,47 @@ async function carregarDados() {
         if (gruposDiv) {
              gruposDiv.innerHTML = '<p style="color:red;">Erro ao carregar os dados. Verifique se o arquivo dados.json existe e está no formato correto.</p>';
         }
+        // Retorna um objeto vazio em caso de erro
+        return { classificacaoCalculada: [], uniqueDates: [] }; 
     }
 }
 
-document.addEventListener('DOMContentLoaded', carregarDados);
+// ==========================================================
+// CONTROLE DA TELA DE INÍCIO (O NOVO BLOCO PRINCIPAL)
+// ==========================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const splashScreen = document.getElementById('splash-screen');
+    const mainContent = document.getElementById('main-content');
+    const startButton = document.getElementById('start-button');
+
+    // Inicia o carregamento e processamento dos dados em segundo plano
+    const promiseDados = carregarDados(); 
+    
+    if (startButton) {
+        startButton.addEventListener('click', async function() {
+            startButton.disabled = true;
+            startButton.textContent = 'Carregando...';
+
+            // Aguarda o processamento de dados ser concluído
+            const { classificacaoCalculada, uniqueDates } = await promiseDados;
+            
+            // 1. Esconde a tela de início
+            if (splashScreen) splashScreen.style.display = 'none';
+            
+            // 2. Mostra o conteúdo principal
+            if (mainContent) mainContent.style.display = 'block';
+
+            // 3. Finaliza a renderização do conteúdo (Chamada de renderização final)
+            renderizarTabelasClassificacao(classificacaoCalculada);
+            renderizarBotoesData(uniqueDates); 
+        });
+    } else {
+        // Fallback: Se o botão não for encontrado, carrega tudo diretamente
+        promiseDados.then(({ classificacaoCalculada, uniqueDates }) => {
+            if (mainContent) mainContent.style.display = 'block';
+            renderizarTabelasClassificacao(classificacaoCalculada);
+            renderizarBotoesData(uniqueDates); 
+        });
+    }
+});
