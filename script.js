@@ -24,6 +24,13 @@ function calcularEstatisticas() {
             SP: 0 // Saldo de Pontos
         };
     });
+    
+    // Função auxiliar para identificar placeholders de mata-mata e evitar console noise
+    function isPlaceholder(timeName) {
+        if (!timeName) return true;
+        const name = timeName.toUpperCase();
+        return name.includes('º') || name.includes('VENCEDOR') || name.includes('PERDEDOR');
+    }
 
     // 2. Processa cada jogo
     DADOS_CAMPEONATO.jogos.forEach(jogo => {
@@ -33,11 +40,12 @@ function calcularEstatisticas() {
         const timeAStats = timesMap[jogo.timeA];
         const timeBStats = timesMap[jogo.timeB];
         
-        // Verifica se o time existe no mapa (crítico para ortografia)
+        // Verifica se o time existe no mapa OU se é um placeholder (para ignorar no cálculo)
         if (!timeAStats || !timeBStats) {
-            if (!timeAStats) console.error(`[ERRO CLASSIFICAÇÃO] Time A "${jogo.timeA}" não encontrado na lista de times. Verifique a ortografia em dados.json.`);
-            if (!timeBStats) console.error(`[ERRO CLASSIFICAÇÃO] Time B "${jogo.timeB}" não encontrado na lista de times. Verifique a ortografia em dados.json.`);
-            return;
+             // Apenas exibe o erro se o time não existir E não for um placeholder.
+            if (!timeAStats && !isPlaceholder(jogo.timeA)) console.error(`[ERRO CLASSIFICAÇÃO] Time A "${jogo.timeA}" não encontrado na lista de times.`);
+            if (!timeBStats && !isPlaceholder(jogo.timeB)) console.error(`[ERRO CLASSIFICAÇÃO] Time B "${jogo.timeB}" não encontrado na lista de times.`);
+            return; // Sai do processamento deste jogo (Correto para placeholders)
         }
 
         // CÁLCULO DO SALDO DE PONTOS (SP) - Se houver parciais válidas
@@ -108,6 +116,9 @@ function getUniqueDates(jogos) {
 
 function renderizarBotoesData(uniqueDates) {
     const container = document.getElementById('date-buttons-container');
+    
+    if (!container) return; // Segurança para o HTML
+
     container.innerHTML = '';
     
     uniqueDates.forEach(date => {
@@ -122,32 +133,39 @@ function renderizarBotoesData(uniqueDates) {
             });
             this.classList.add('active');
             
-            filtrarResultados(date, DADOS_CAMPEONATO.jogos);
+            // Reutiliza o filtro de naipe ativo
+            const naipeFiltro = document.querySelector('.naipe-button.active')?.dataset.naipe || 'Todos';
+            filtrarResultados(date, DADOS_CAMPEONATO.jogos, naipeFiltro);
         });
         
         container.appendChild(button);
     });
 
     if (uniqueDates.length > 0) {
+        // Clica no primeiro botão para carregar a primeira data
         container.querySelector('.date-button').click();
     }
 }
 
-// ATUALIZE ESTA FUNÇÃO NO SEU script.js
 function renderizarTabelasClassificacao(classificacaoDados, naipeFiltro = 'Todos') {
     const container = document.getElementById('classificacao-grupos');
+    
+    if (!container) return; // Segurança para o HTML
+    
     container.innerHTML = ''; 
 
     // 1. FILTRAGEM POR NAIPE
     let dadosFiltrados = classificacaoDados;
     if (naipeFiltro !== 'Todos') {
-        dadosFiltrados = classificacaoDados.filter(time => time.naipe === naipeFiltro);
+        dadosFiltrados = dadosFiltrados.filter(time => time.naipe === naipeFiltro);
     }
 
     const gruposPorNaipe = dadosFiltrados.reduce((acc, time) => {
-        const chave = `${time.naipe}_${time.grupo}`;
+        // Usa uma string vazia se o grupo for undefined/null para evitar chave "undefined"
+        const grupoChave = time.grupo || '';
+        const chave = `${time.naipe}_${grupoChave}`;
         if (!acc[chave]) {
-            acc[chave] = { naipe: time.naipe, grupo: time.grupo, times: [] };
+            acc[chave] = { naipe: time.naipe, grupo: grupoChave, times: [] };
         }
         acc[chave].times.push(time);
         return acc;
@@ -172,10 +190,12 @@ function renderizarTabelasClassificacao(classificacaoDados, naipeFiltro = 'Todos
         });
 
         const naipeNome = naipe === 'F' ? 'Feminino' : 'Masculino';
+        // CORREÇÃO: Adiciona " - Grupo X" somente se o grupo existir (não for string vazia)
+        const grupoHeader = grupo ? ` - Grupo ${grupo}` : '';
         
         let tabelaHTML = `
             <div class="tabela-grupo">
-                <h3>Vôlei ${naipeNome} - Grupo ${grupo}</h3>
+                <h3>Vôlei ${naipeNome}${grupoHeader}</h3>
                 <table>
                     <thead>
                         <tr>
@@ -212,8 +232,15 @@ function renderizarTabelasClassificacao(classificacaoDados, naipeFiltro = 'Todos
     });
 }
 
-function filtrarResultados(dataSelecionada, todosOsJogos) {
-    const container = document.getElementById('resultados-container');
+function filtrarResultados(dataSelecionada, todosOsJogos, naipeFiltro = 'Todos') {
+    // O alvo correto no seu HTML é 'resultados-container'
+    const container = document.getElementById('resultados-container'); 
+    
+    if (!container) {
+        console.error("ERRO FATAL: O elemento com id='resultados-container' não foi encontrado no seu HTML. Verifique o arquivo index.html.");
+        return; 
+    }
+
     container.innerHTML = ''; 
 
     if (!dataSelecionada) {
@@ -221,96 +248,135 @@ function filtrarResultados(dataSelecionada, todosOsJogos) {
         return;
     }
 
-    const jogosFiltrados = todosOsJogos.filter(jogo => jogo.data === dataSelecionada);
+    // Filtra por data
+    let jogosFiltrados = todosOsJogos.filter(jogo => jogo.data === dataSelecionada);
 
+    // Filtra por naipe
+    if (naipeFiltro !== 'Todos') {
+        jogosFiltrados = jogosFiltrados.filter(jogo => 
+            // O jogo agora TEM a propriedade naipe (inferida em carregarDados)
+            jogo.naipe && jogo.naipe.toUpperCase() === naipeFiltro.toUpperCase()
+        );
+    }
+    
     if (jogosFiltrados.length === 0) {
-        container.innerHTML = `<p>Nenhum jogo encontrado para o dia ${formatarData(dataSelecionada)}.</p>`;
-    } else {
-        let resultadosHTML = `<h3>Programação do dia ${formatarData(dataSelecionada)}</h3>`;
+        container.innerHTML = `<p style="text-align:center; padding: 30px; color: #6c757d;">Nenhum jogo encontrado para o dia ${formatarData(dataSelecionada)}.</p>`;
+        return;
+    }
+    
+    // 1. Agrupar JOGOS por LOCAL
+    const jogosPorLocal = jogosFiltrados.reduce((acc, jogo) => {
+        const local = jogo.local;
+        if (!acc[local]) {
+            acc[local] = [];
+        }
+        acc[local].push(jogo);
+        return acc;
+    }, {});
+    
+    const locaisOrdenados = Object.keys(jogosPorLocal).sort();
+    
+    // Usaremos um Document Fragment para injeção eficiente de DOM
+    const fragment = document.createDocumentFragment();
 
-        // 1. Agrupar JOGOS por LOCAL (A CHAVE PARA A SEPARAÇÃO POR QUADRA)
-        const jogosPorLocal = jogosFiltrados.reduce((acc, jogo) => {
-            const local = jogo.local;
-            if (!acc[local]) {
-                acc[local] = [];
+    // 2. Iterar sobre cada LOCAL (Quadra)
+    locaisOrdenados.forEach(local => {
+        
+        const localHeader = document.createElement('h4');
+        localHeader.className = 'local-header';
+        localHeader.textContent = `Local: ${local}`;
+        fragment.appendChild(localHeader);
+
+        const localGroup = document.createElement('div');
+        localGroup.className = 'local-group';
+        
+        const jogosNesteLocal = jogosPorLocal[local];
+
+        // 3. Agrupar JOGOS DENTRO DESTE LOCAL por FASE
+        const jogosPorFaseNesteLocal = jogosNesteLocal.reduce((acc, jogo) => {
+            const fase = jogo.fase;
+            if (!acc[fase]) {
+                acc[fase] = [];
             }
-            acc[local].push(jogo);
+            acc[fase].push(jogo);
             return acc;
         }, {});
-        
-        const locaisOrdenados = Object.keys(jogosPorLocal).sort();
-        
-        // 2. Iterar sobre cada LOCAL (Quadra)
-        locaisOrdenados.forEach(local => {
-            resultadosHTML += `<div class="local-group">`;
-            resultadosHTML += `<h3 class="local-header">Local: ${local}</h3>`; 
+
+        // 4. Iterar sobre cada FASE dentro deste local
+        for (const fase in jogosPorFaseNesteLocal) {
             
-            const jogosNesteLocal = jogosPorLocal[local];
-
-            // 3. Agrupar JOGOS DENTRO DESTE LOCAL por FASE
-            const jogosPorFaseNesteLocal = jogosNesteLocal.reduce((acc, jogo) => {
-                const fase = jogo.fase;
-                if (!acc[fase]) {
-                    acc[fase] = [];
-                }
-                acc[fase].push(jogo);
-                return acc;
-            }, {});
-
-            // 4. Iterar sobre cada FASE dentro deste local
-            for (const fase in jogosPorFaseNesteLocal) {
-                resultadosHTML += `<h4>${fase}</h4>`; 
+            const faseHeader = document.createElement('h4');
+            faseHeader.textContent = fase;
+            localGroup.appendChild(faseHeader);
+            
+            jogosPorFaseNesteLocal[fase].forEach(jogo => {
+                const setsA = jogo.sets && jogo.sets[0] || 0;
+                const setsB = jogo.sets && jogo.sets[1] || 0;
+                const hora = jogo.hora || '';
                 
-                jogosPorFaseNesteLocal[fase].forEach(jogo => {
-                    const setsA = jogo.sets && jogo.sets[0] || 0;
-                    const setsB = jogo.sets && jogo.sets[1] || 0;
-                    const hora = jogo.hora || '';
-                    
-                    const jogoconcluido = (setsA >= 3 || setsB >= 3) && (setsA + setsB >= 3);
-                    
-                    let nomeTimeA = jogo.timeA;
-                    let nomeTimeB = jogo.timeB;
-                    let placarStr = `? x ?`;
-                    let placarClasse = '';
-                    let parciaisStr = 'Aguardando Resultados';
-
-                    // NOVO: Formata as parciais
-                    if (Array.isArray(jogo.parciais) && jogo.parciais.length > 0) {
-                        parciaisStr = jogo.parciais.map(parcial => `${parcial[0]}-${parcial[1]}`).join(', ');
+                const isFinalizado = (setsA >= 3 || setsB >= 3) && (setsA + setsB >= 3);
+                
+                let timeA_display = jogo.timeA;
+                let timeB_display = jogo.timeB;
+                const setsPlacar = isFinalizado ? `${setsA}x${setsB}` : (setsA + setsB > 0 ? `${setsA}x${setsB}` : 'Aguardando');
+                
+                if (isFinalizado) {
+                    if (setsA > setsB) {
+                        timeA_display = `<span class="time-vencedor">${jogo.timeA}</span>`;
+                    } else if (setsB > setsA) {
+                        timeB_display = `<span class="time-vencedor">${jogo.timeB}</span>`;
                     }
+                }
+                
+                // Formata as parciais para a exibição
+                const parciaisFormatadas = jogo.parciais && jogo.parciais.length > 0
+                    ? jogo.parciais.map(p => `${p[0]}x${p[1]}`).join(', ')
+                    : 'Aguardando sets.';
 
-                    if (jogoconcluido) {
-                        placarClasse = 'placar-final';
-                        placarStr = `${setsA} x ${setsB}`;
+                const jogoDiv = document.createElement('div');
+                jogoDiv.className = 'jogo';
+                if (isFinalizado) {
+                    jogoDiv.classList.add('jogo-finalizado');
+                }
+                
+                // Adiciona a info do grupo/fase apenas se ela existir no objeto jogo
+                const grupoInfo = jogo.grupo ? ` - Grupo ${jogo.grupo}` : '';
+
+                // Montagem do HTML do Jogo
+                jogoDiv.innerHTML = `
+                    <div class="jogo-info">
+                        <p>${hora}h - <strong>${timeA_display}</strong> vs <strong>${timeB_display}</strong></p>
+                        <p><small>${jogo.naipe === 'F' ? 'Feminino' : (jogo.naipe === 'M' ? 'Masculino' : 'Naipe N/D')}${grupoInfo}</small></p>
                         
-                        if (setsA > setsB) {
-                            nomeTimeA = `<span class="time-vencedor">${jogo.timeA}</span>`;
-                        } else if (setsB > setsA) {
-                            nomeTimeB = `<span class="time-vencedor">${jogo.timeB}</span>`;
-                        }
-                    } else if (setsA > 0 || setsB > 0) {
-                        placarStr = `${setsA} x ${setsB}`;
-                    }
-                    
-                    resultadosHTML += `
-                        <div class="jogo">
-                            <div class="jogo-info">
-                                <p>${hora} - <strong>${nomeTimeA}</strong> vs <strong>${nomeTimeB}</strong></p>
-                                <small>Parciais: ${parciaisStr}</small>
-                            </div>
-                            <div class="placar-box ${placarClasse}">
-                                ${placarStr}
-                            </div>
+                        <div class="parciais-detalhe">
+                            <small>Sets: ${parciaisFormatadas}</small>
                         </div>
-                    `;
-                });
-            }
+                    </div>
+                    <div class="placar-box ${isFinalizado ? 'placar-final' : ''}">
+                        ${setsPlacar}
+                    </div>
+                `;
+                
+                localGroup.appendChild(jogoDiv);
+            });
             
-            resultadosHTML += `</div>`;
-        });
+        }
         
-        container.innerHTML = resultadosHTML;
-    }
+        fragment.appendChild(localGroup);
+    });
+    
+    container.appendChild(fragment);
+
+    // Adiciona o Evento de Clique para Expandir/Ocultar
+    document.querySelectorAll('.jogo-finalizado').forEach(jogoElement => {
+        jogoElement.addEventListener('click', function(event) { 
+            const parciais = this.querySelector('.parciais-detalhe');
+            // Impede que o clique no placar feche o detalhe (melhora a UX)
+            if (!event.target.classList.contains('placar-box')) {
+                parciais.classList.toggle('expanded');
+            }
+        });
+    });
 }
 
 
@@ -318,7 +384,6 @@ function filtrarResultados(dataSelecionada, todosOsJogos) {
 // FUNÇÕES DE INICIALIZAÇÃO
 // ==========================================================
 
-// ATUALIZE ESTA FUNÇÃO NO SEU script.js
 async function carregarDados() {
     try {
         const response = await fetch('dados.json');
@@ -328,6 +393,26 @@ async function carregarDados() {
         }
         
         DADOS_CAMPEONATO = await response.json();
+        
+        // NOVO CÓDIGO: MAPEAR E INFERIR O NAIPE DOS JOGOS
+        const teamNaipeMap = {};
+        DADOS_CAMPEONATO.times.forEach(time => {
+            teamNaipeMap[time.time] = time.naipe;
+        });
+
+        DADOS_CAMPEONATO.jogos.forEach(jogo => {
+            // Se o naipe não estiver explicitamente no JSON do jogo, tenta inferir.
+            if (!jogo.naipe) {
+                const naipeInferido = teamNaipeMap[jogo.timeA];
+                
+                // Se o time A for um time real (não um placeholder)
+                if (naipeInferido) {
+                    // Adiciona a propriedade 'naipe' ao objeto do jogo.
+                    jogo.naipe = naipeInferido;
+                } 
+            }
+        });
+        // FIM DO NOVO CÓDIGO DE INFERÊNCIA
         
         const classificacaoCalculada = calcularEstatisticas();
         
@@ -349,9 +434,11 @@ async function carregarDados() {
                 // Filtra e renderiza a tabela de classificação
                 renderizarTabelasClassificacao(classificacaoCalculada, naipeSelecionado);
                 
-                // Filtra a programação e resultados (opcional, mas recomendado)
-                // Se quiser filtrar os resultados também:
-                // renderizarResultadosFiltradosPorNaipe(naipeSelecionado); 
+                // Re-executa o filtro de resultados com a data ativa e o novo naipe
+                const dataAtiva = document.querySelector('.date-button.active')?.dataset.date;
+                if (dataAtiva) {
+                    filtrarResultados(dataAtiva, DADOS_CAMPEONATO.jogos, naipeSelecionado); 
+                }
             });
         });
 
@@ -361,8 +448,10 @@ async function carregarDados() {
 
     } catch (error) {
         console.error("Falha ao carregar ou processar o JSON:", error);
-        document.getElementById('classificacao-grupos').innerHTML = 
-            '<p style="color:red;">Erro ao carregar os dados. Verifique se o arquivo dados.json existe e está no formato correto.</p>';
+        const gruposDiv = document.getElementById('classificacao-grupos');
+        if (gruposDiv) {
+             gruposDiv.innerHTML = '<p style="color:red;">Erro ao carregar os dados. Verifique se o arquivo dados.json existe e está no formato correto.</p>';
+        }
     }
 }
 

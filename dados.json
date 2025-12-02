@@ -34,11 +34,11 @@
         { "data": "2024-12-15", "hora": "16:00", "fase": "Fase de Grupos (Fem A)", "timeA": "TAURUS", "timeB": "SÃO RAIMUNDO", "sets": [0, 3], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
         { "data": "2024-12-15", "hora": "17:00", "fase": "Fase de Grupos (Masc C)", "timeA": "LOBO D’ALMADA (M)", "timeB": "IFRR CLUBE", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
         { "data": "2024-12-15", "hora": "17:00", "fase": "Fase de Grupos (Masc D)", "timeA": "ARD SUB - 20", "timeB": "INDEPENDENTE RORAIMA (SUB - 19)", "sets": [0, 3], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
-        { "data": "2024-12-15", "hora": "18:00", "fase": "Fase de Grupos (Masc B)", "timeA": "INDEPENDENTE RORAIMA (SUB - 16)", "timeB": "INDEPENDENTE RORAIMA (SUB - ADULTO)", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-15", "hora": "18:00", "fase": "Fase de Grupos (Masc B)", "timeA": "INDEPENDENTE RORAIMA (SUB - 16)", "timeB": "INDEPENDENTE RORAIMA (SUB - ADULTO)", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza f" },
 
 
-        { "data": "2024-12-16", "hora": "20:00", "fase": "Fase de Grupos (Masc A)", "timeA": "ARENA", "timeB": "AZUL MANIA", "sets": [3, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
-        { "data": "2024-12-16", "hora": "20:00", "fase": "Fase de Grupos (Masc C)", "timeA": "EVEREST VÔLEI", "timeB": "LOBO D’ALMADA (M)", "sets": [0, 3], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-16", "hora": "20:00", "fase": "Fase de Grupos (Masc A)", "timeA": "ARENA", "timeB": "AZUL MANIA", "sets": [3, 0], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
+        { "data": "2024-12-16", "hora": "20:00", "fase": "Fase de Grupos (Masc C)", "timeA": "EVEREST VÔLEI", "timeB": "LOBO D’ALMADA (M)", "sets": [0, 3], "parciais": [[25, 10], [25, 15], [25, 20]], "local": "Escola Antonio Ferreira de Souza" },
         
 
         { "data": "2024-12-17", "hora": "18:30", "fase": "Fase de Grupos (Fem B)", "timeA": "LOBO D’ALMADA (F)", "timeB": "MACUXI SPORT", "sets": [0, 0], "parciais": [], "local": "Escola Antonio Ferreira de Souza" },
